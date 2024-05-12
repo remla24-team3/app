@@ -1,5 +1,7 @@
 FROM python:3.12
 
+ENV MODEL_SERVICE=http://127.0.0.1:105
+
 WORKDIR /app
 ADD . /app
 

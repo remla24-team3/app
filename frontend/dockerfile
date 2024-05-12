@@ -1,5 +1,7 @@
 FROM node:18.0.0-alpine
 
+ENV REACT_APP_SERVICE=http://127.0.0.1:106
+
 WORKDIR /app
 ADD . /app
 
