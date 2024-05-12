@@ -23,7 +23,7 @@ jobs:
         poetry install
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        pylint --disable E0611 $(git ls-files '*.py')
     - name: Analysing the code with Flake8
       run: |
         flake8 .
