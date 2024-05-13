@@ -21,6 +21,9 @@ function App() {
     fetch(predictionUrl, {
       method: "POST",
       body: JSON.stringify({ inputPrediction }),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
     .then(response => response.json())
     .then(data => {
