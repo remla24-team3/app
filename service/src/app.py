@@ -42,13 +42,14 @@ def predict():
         JSON: A JSON object containing the prediction result.
     """
     url = request.json.get('inputPrediction')
-    response = requests.post(
-        os.environ.get('MODEL_SERVICE') + '/API/v1.0/other_endpoint',
-        json={"url": url},
+    response = requests.get(
+        os.environ.get('MODEL_SERVICE') + '/API/v1.0/predict',
+        params={"url": url},
         timeout=10
     )
-    prediction = response.json()
-    return jsonify(prediction)
+    prediction = response.text
+    prediction_data = {'prediction': prediction}
+    return jsonify(prediction_data)
 
 
 if __name__ == '__main__':

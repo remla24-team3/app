@@ -17,14 +17,13 @@ function App() {
   }, []);
 
   const predict = () => {
-    fetch(process.env.REACT_APP_SERVICE + "/API/v1.0/predict", {
+    const predictionUrl = process.env.REACT_APP_SERVICE + "/API/v1.0/predict";
+    fetch(predictionUrl, {
       method: "POST",
-      mode: "cors",
-      credentials: "same-origin",
+      body: JSON.stringify({ inputPrediction }),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ inputPrediction }),
     })
     .then(response => response.json())
     .then(data => {
@@ -41,9 +40,14 @@ function App() {
 
   return (
     <div className="App">
-      {data && (
+      {data && Object.hasOwn(data, "version") && (
         <div>
           <p>{data.version}</p>
+        </div>
+      )}
+      {data && Object.hasOwn(data, "prediction") && (
+        <div>
+          <p>{data.prediction}</p>
         </div>
       )}
       <input type="text" value={inputPrediction} onChange={handleInputChange} />
