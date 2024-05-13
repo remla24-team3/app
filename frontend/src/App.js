@@ -17,13 +17,9 @@ function App() {
   }, []);
 
   const predict = () => {
-    fetch(process.env.REACT_APP_SERVICE + "/API/v1.0/predict", {
+    const predictionUrl = process.env.REACT_APP_SERVICE + "/API/v1.0/predict";
+    fetch(predictionUrl, {
       method: "POST",
-      mode: "cors",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({ inputPrediction }),
     })
     .then(response => response.json())
