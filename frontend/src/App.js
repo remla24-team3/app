@@ -41,9 +41,14 @@ function App() {
 
   return (
     <div className="App">
-      {data && (
+      {data.version && (
         <div>
           <p>{data.version}</p>
+        </div>
+      )}
+      {data.prediction && (
+        <div>
+          <p>{data.prediction}</p>
         </div>
       )}
       <input type="text" value={inputPrediction} onChange={handleInputChange} />
