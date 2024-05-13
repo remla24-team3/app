@@ -41,12 +41,12 @@ function App() {
 
   return (
     <div className="App">
-      {data.version && (
+      {data && Object.hasOwn(data, "version") && (
         <div>
           <p>{data.version}</p>
         </div>
       )}
-      {data.prediction && (
+      {data && Object.hasOwn(data, "prediction") && (
         <div>
           <p>{data.prediction}</p>
         </div>
