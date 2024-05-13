@@ -302,13 +302,13 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "lib-version-group3"
-version = "0.1.2"
+version = "0.1.4"
 description = "A Python library for managing and retrieving the software version."
 optional = false
 python-versions = "<3.13,>=3.8"
 files = [
-    {file = "lib_version_group3-0.1.2-py3-none-any.whl", hash = "sha256:46a984c7a8d7474b9b0073116b702b5af8696b17daf0f9441b97f3ad11d40403"},
-    {file = "lib_version_group3-0.1.2.tar.gz", hash = "sha256:c2fc24989b2d74e4b844f08c67084e23fa29bdf6473086a027dd7a0c82acb34a"},
+    {file = "lib_version_group3-0.1.4-py3-none-any.whl", hash = "sha256:ebf9ffd0ba64f55d6c0d64eb859a27acffb6d965ebdf15a45407e4f5ac34c10e"},
+    {file = "lib_version_group3-0.1.4.tar.gz", hash = "sha256:ef98b893de5f1a39b60914aa54979b0174d6f96f9cd97c7e19522785fd82a84b"},
 ]
 
 [[package]]
@@ -565,4 +565,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.13"
-content-hash = "f6bcc26a66894be6d0050aac81d120c404c505e2102dcb5a9bdfccef57f488a1"
+content-hash = "b2aaa136dbe667f114eb45a643e415ed8bf79b748c07b59a2330107b71a9b3b5"
