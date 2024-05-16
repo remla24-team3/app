@@ -1,0 +1,30 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Update apt repository and cache
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+- hosts: controller
+  become: yes
+  tasks:
+    - name: Install Minikube
+      shell: |
+        curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        install minikube-linux-amd64 /usr/local/bin/minikube
+
+    - name: Start Minikube
+      shell: minikube start --driver=none
+
+- hosts: worker
+  become: yes
+  tasks:
+    - name: Install k3s
+      shell: |
+        curl -sfL https://get.k3s.io | sh -
