@@ -46,6 +46,11 @@ function App() {
           <p>{data.version}</p>
         </div>
       )}
+      {data && Object.hasOwn(data, "prediction") && (
+        <div>
+          <p>{data.prediction}</p>
+        </div>
+      )}
       <input type="text" value={inputPrediction} onChange={handleInputChange} />
       <button onClick={predict}>Predict</button>
     </div>

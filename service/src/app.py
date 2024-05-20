@@ -15,7 +15,7 @@ from flask import Flask, jsonify, request
 from lib_version_group3.version import VersionUtil
 from flask_cors import CORS
 import requests
-from prometheus_client import start_http_server, Summary, Counter, Gauge
+from prometheus_client import Summary, Counter, Gauge
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
 
 app = Flask(__name__)
@@ -80,12 +80,13 @@ def predict():
     PREDICTION_COUNT.inc()
     url = request.json.get('inputPrediction')
     response = requests.post(
-        os.environ.get('MODEL_SERVICE') + '/API/v1.0/other_endpoint',
-        json={"url": url},
+        os.environ.get('MODEL_SERVICE') + '/API/v1.0/predict',
+        params={"url": url},
         timeout=10
     )
-    prediction = response.json()
-    return jsonify(prediction)
+    prediction = response.text
+    prediction_data = {'prediction': prediction}
+    return jsonify(prediction_data)
 
 
 @app.route('/metrics')
@@ -100,5 +101,4 @@ def metrics():
 
 
 if __name__ == '__main__':
-    start_http_server(5001)
     app.run(host='0.0.0.0', port=106, debug=True)
