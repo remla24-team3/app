@@ -88,7 +88,7 @@ def predict():
     prediction_data = {'prediction': prediction}
     return jsonify(prediction_data)
 
-
+  
 @app.route('/metrics')
 def metrics():
     """
