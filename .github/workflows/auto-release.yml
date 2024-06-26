@@ -46,19 +46,15 @@ jobs:
       - name: Extract version information
         id: vars
         run: |
-          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/}
-          else
-            LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-            LATEST_TAG=${LATEST_TAG#v}
-            IFS='.' read -ra ADDR <<< "$LATEST_TAG"
-            PATCH=$((ADDR[2] + 1))
-            VERSION="${ADDR[0]}.${ADDR[1]}.$PATCH"
-            if [[ "${GITHUB_REF}" == refs/heads/main ]]; then
-              VERSION="v$VERSION"
-            elif [[ "${GITHUB_REF}" == refs/heads/beta/* ]]; then
-              VERSION="v$VERSION-beta-$(date +%Y%m%d)"
-            fi
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          LATEST_TAG=${LATEST_TAG#v}
+          IFS='.' read -ra ADDR <<< "$LATEST_TAG"
+          PATCH=$((ADDR[2] + 1))
+          VERSION="${ADDR[0]}.${ADDR[1]}.$PATCH"
+          if [[ "${GITHUB_REF}" == refs/heads/main ]]; then
+            VERSION="v$VERSION"
+          elif [[ "${GITHUB_REF}" == refs/heads/beta/* ]]; then
+            VERSION="v$VERSION-beta-$(date +%Y%m%d)"
           fi
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
