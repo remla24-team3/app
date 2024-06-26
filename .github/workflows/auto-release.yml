@@ -46,7 +46,7 @@ jobs:
       - name: Extract version information
         id: vars
         run: |
-          CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          CURRENT_TAG=$((git for-each-ref --sort=-creatordate --format '%(refname:short)' refs/tags | head -n 1) || echo "v0.0.0")
           CURRENT_TAG=${CURRENT_TAG#v}
           
           IFS='.' read -ra ADDR <<< "$CURRENT_TAG"
