@@ -9,7 +9,7 @@ on:
       - v*
 
 permissions:
-  contents: write
+  contents: read
   pull-requests: write
   packages: write
   actions: write
@@ -23,7 +23,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       packages: write
       actions: write
 
