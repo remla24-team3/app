@@ -12,6 +12,7 @@ permissions:
   contents: write
   pull-requests: write
   packages: write
+  actions: write
 
 env:
   REGISTRY: ghcr.io
@@ -24,6 +25,7 @@ jobs:
     permissions:
       contents: write
       packages: write
+      actions: write
 
     steps:
       - uses: actions/checkout@v4
@@ -33,13 +35,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-
-      - name: Check GITHUB_TOKEN permissions
-        run: |
-          echo "Permissions for GITHUB_TOKEN:"
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/${{ github.repository }}/actions/permissions
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
