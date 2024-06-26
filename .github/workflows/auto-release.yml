@@ -8,11 +8,8 @@ on:
     tags:
       - v*
 
-permissions:
-  contents: read
-  pull-requests: write
-  packages: write
-  actions: write
+permissions: 
+  contents: write-all
 
 env:
   REGISTRY: ghcr.io
@@ -23,9 +20,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
-      actions: write
+      contents: write-all
 
     steps:
       - uses: actions/checkout@v4
