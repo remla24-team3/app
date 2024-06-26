@@ -46,16 +46,29 @@ jobs:
       - name: Extract version information
         id: vars
         run: |
-          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-          LATEST_TAG=${LATEST_TAG#v}
-          IFS='.' read -ra ADDR <<< "$LATEST_TAG"
+          # Extract the current tag or default to v0.0.0 if no tags are found
+          CURRENT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          CURRENT_TAG=${CURRENT_TAG#v}
+          
+          # Split the version into components
+          IFS='.' read -ra ADDR <<< "$CURRENT_TAG"
+          
+          # Increment the patch version
           PATCH=$((ADDR[2] + 1))
           VERSION="${ADDR[0]}.${ADDR[1]}.$PATCH"
-          if [[ "${GITHUB_REF}" == refs/heads/main ]]; then
+          
+          # Add prefix and suffix based on the branch
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            VERSION="v$VERSION"
+          elif [[ "${GITHUB_REF}" == refs/heads/main ]]; then
             VERSION="v$VERSION"
           elif [[ "${GITHUB_REF}" == refs/heads/beta/* ]]; then
             VERSION="v$VERSION-beta-$(date +%Y%m%d)"
+          else
+            VERSION="v$VERSION"
           fi
+          
+          # Output the version to the GitHub environment
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Create release
