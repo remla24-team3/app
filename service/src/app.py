@@ -17,9 +17,11 @@ from flask_cors import CORS
 import requests
 from prometheus_client import Summary, Counter, Gauge
 from prometheus_client import generate_latest, CONTENT_TYPE_LATEST
+from flasgger import Swagger
 
 app = Flask(__name__)
 CORS(app)
+swagger = Swagger(app)
 
 # Create metrics
 REQUEST_TIME = Summary('request_processing_seconds', 'Time spent')
@@ -60,9 +62,18 @@ def after_request(response):
 def version():
     """
     Endpoint to retrieve the version of the application.
-
-    Returns:
-        JSON: A JSON object containing the version information.
+    ---
+    responses:
+      200:
+        description: A JSON object containing the version information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                version:
+                  type: string
+                  example: "1.0.0"
     """
     version_string = VersionUtil.get_version()
     version_data = {'version': version_string}
@@ -73,9 +84,28 @@ def version():
 def predict():
     """
     Endpoint to predict based on input data.
-
-    Returns:
-        JSON: A JSON object containing the prediction result.
+    ---
+    parameters:
+      - name: inputPrediction
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            inputPrediction:
+              type: string
+              example: "http://example.com/input"
+    responses:
+      200:
+        description: A JSON object containing the prediction result
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prediction:
+                  type: string
+                  example: "Prediction result"
     """
     PREDICTION_COUNT.inc()
     url = request.json.get('inputPrediction')
@@ -93,9 +123,14 @@ def predict():
 def metrics():
     """
     Endpoint to expose Prometheus metrics.
-
-    Returns:
-        Response: A plaintext response containing the Prometheus metrics.
+    ---
+    responses:
+      200:
+        description: A plaintext response containing the Prometheus metrics
+        content:
+          text/plain:
+            schema:
+              type: string
     """
     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
